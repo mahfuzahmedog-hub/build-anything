@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Anything</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Build Anything</h1>
+            <p class="subtitle">AI-supervised web application</p>
+        </header>
+        <main>
+            <section class="hero">
+                <h2>Welcome</h2>
+                <p>This app is built with the <strong>supervisor-agent</strong> pattern — every feature is verified automatically.</p>
+                <a href="/dashboard" class="btn">Go to Dashboard</a>
+            </section>
+            <section class="status">
+                <h3>System Status</h3>
+                <div id="status-display">Checking...</div>
+            </section>
+        </main>
+    </div>
+    <script>
+        fetch('/api/status')
+            .then(r => r.json())
+            .then(d => {
+                document.getElementById('status-display').innerHTML =
+                    `<span class="ok">✓ Online</span> (uptime: ${d.uptime_seconds}s)`;
+            })
+            .catch(() => {
+                document.getElementById('status-display').innerHTML =
+                    `<span class="err">✗ Offline</span>`;
+            });
+    </script>
+</body>
+</html>
