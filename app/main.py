@@ -22,23 +22,22 @@ app = FastAPI(title="Build Anything", version="0.1.0", lifespan=lifespan)
 
 START_TIME = datetime.now(UTC)
 
-# Mount static files
 static_dir = os.path.join(os.path.dirname(__file__), "static")
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
-# Include routers
 app.include_router(items.router)
 
-# Serve HTML pages
+
 @app.get("/")
 async def index():
     return FileResponse(os.path.join(static_dir, "index.html"))
+
 
 @app.get("/dashboard")
 async def dashboard():
     return FileResponse(os.path.join(static_dir, "dashboard.html"))
 
-# Health endpoint
+
 @app.get("/api/status")
 async def status():
     uptime = (datetime.now(UTC) - START_TIME).total_seconds()
